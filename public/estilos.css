@@ -1,0 +1,32 @@
+body{
+    font-family: 'Roboto',sans-serif;
+}
+
+p{
+    font-family: 'Roboto', sans-serif;
+    text-align: center;
+}
+
+h1{
+    font-family: 'Roboto', sans-serif;
+    text-align: center;
+}
+
+ul{
+    list-style:none;
+    padding-left: 10px;
+}
+
+li{
+    margin: 0;
+}
+
+h3{
+    font-size: 24px;
+}
+
+h2{
+    background-color: #c4c4;
+    padding: 8px;
+    font-size: 24px;
+}
