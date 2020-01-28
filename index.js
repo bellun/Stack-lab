@@ -10,14 +10,26 @@ app.use(express.static('public'))
 
 app.get('/', async(request, response) => {
     const db = await dbConnection
-    const categorias = await db.all('SELECT  * FROM categorias;')
+    const categoriasDb = await db.all('SELECT  * FROM categorias;')
+    const vagas = await db.all('SELECT * FROM vagas')
+    const categorias = categoriasDb.map(cat => {
+        return {
+            ...cat,
+            vagas: vagas.filter(vaga => vaga.categoria === cat.id)
+        }
+    })
+
     response.render('home', {
         categorias
     })
 
 })
 
-app.get('/vaga', (request, response) => {
+app.get('/vaga/:id', async(request, response) => {
+    console.log(request.params)
+    const db = await dbConnection
+    const vaga = await db.get('SELECT * FROM vagas where id= ' + request.params.id)
+    console.log(vaga)
     response.render('vaga')
 })
 
@@ -26,9 +38,9 @@ const init = async() => {
     const db = await dbConnection
     await db.run('CREATE TABLE if not exists categorias (id INTEGER PRIMARY KEY, categoria TEXT);')
     await db.run('CREATE TABLE if not exists vagas (id INTEGER PRIMARY KEY, categoria INTEGER, titulo TEXT,  descricao TEXT);')
-
-    const categoria = 'Engeneering team'
-    await db.run(`INSERT INTO categorias (categoria) values('${categoria}')`)
+    const categoria = 'Social Media (San Francisco)'
+    const descricao = 'Vaga para redes sociais  para divulgar o stacklab'
+    await db.run(`INSERT INTO vagas (categoria,titulo,descricao) values(1,'${categoria}', '${descricao}')`)
 }
 init()
 
