@@ -30,9 +30,29 @@ app.get('/vaga/:id', async(request, response) => {
     const db = await dbConnection
     const vaga = await db.get('SELECT * FROM vagas where id= ' + request.params.id)
     console.log(vaga)
-    response.render('vaga')
+    response.render('vaga', {
+        vaga
+    })
 })
 
+app.get('/admin', (request) => {
+    response.render('admin/home')
+})
+
+app.get('admin/vagas', (req, res) => {
+    res.render('admin/home')
+})
+
+app.get('/admin/vagas', async(req, res) => {
+    db = await dbConnection
+    const vagas = await db.all('SELECT * FROM vagas;')
+    res.render('admin/vagas', { vagas })
+})
+app.get('/admin/vagas/delete/:id', async(req, res) => {
+    const db = await dbConnection
+    await db.run('DELETE FROM vagas WHERE id= ' + req.params.id + 'limit 1')
+    res.redirect('/admin/vagas')
+})
 
 const init = async() => {
     const db = await dbConnection

@@ -1,0 +1,24 @@
+<html>
+
+<head></head>
+<title>Jobfy</title>
+<link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+<link href="estilos.css" rel="stylesheet">
+</head>
+
+<body>
+    <h1>
+        <a href="/"> <img src="images\logo.png" alt="Jobify - Dev Pleno"></a>
+    </h1>
+    <h2>Admin de Vagas: </h2>
+    <ul>
+        <% vagas.forEach( vaga => { %>
+            <li>
+                <%- vaga.titulo %>
+                    <a href="/admin/vaga/delete/<%- vaga.id %>">Excluir</a>
+            </li>
+            <% }) %>
+    </ul>
+</body>
+
+</html>
