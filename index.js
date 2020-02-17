@@ -35,6 +35,10 @@ app.get('/vaga/:id', async(request, response) => {
     })
 })
 
+app.get('/admin/vagas/nova'), async(req, res) => {
+res.render('admin/nova-vaga')
+})
+
 app.get('/admin', (request) => {
     response.render('admin/home')
 })
@@ -50,7 +54,7 @@ app.get('/admin/vagas', async(req, res) => {
 })
 app.get('/admin/vagas/delete/:id', async(req, res) => {
     const db = await dbConnection
-    await db.run('DELETE FROM vagas WHERE id= ' + req.params.id + 'limit 1')
+    await db.run('DELETE FROM vagas WHERE id= ' + req.params.id)
     res.redirect('/admin/vagas')
 })
 
